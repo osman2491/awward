@@ -42,3 +42,15 @@ class ProfileTestClass(TestCase):
         self.profile.save_profile()
         profile = Profile.objects.all()
         self.assertTrue(len(profile)>0)
+
+    def test_delete_method(self):
+        self.profile.save_profile()
+        self.profile.delete_profile()
+        profile = Profile.objects.all()
+        self.assertTrue(len(profile) is 0)
+                        
+    def test_update_method(self):
+        self.profile.save_profile()
+        new_name = 'Erik' 
+        update = self.profile.update_name(self.profile.user_id,new_name)
+        self.assertEqual(update,new_name)
