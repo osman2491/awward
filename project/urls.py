@@ -15,7 +15,21 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from rest_framework import routers
+from django.contrib.auth import views
+from myproject.views import PostViewset,ProfileViewset
+
+
+router = routers.DefaultRouter()
+router.register(r'profiles', ProfileViewset)
+router.register(r'posts', PostViewset)
 
 urlpatterns = [
+    
     url(r'^admin/', admin.site.urls),
+    url(r'',include('myproject.urls')),
+    url('',include(router.urls)),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
+    url(r'^logout/$', views.logout,{"next_page":'/'}),
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
 ]
