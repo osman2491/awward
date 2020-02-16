@@ -24,3 +24,6 @@ class Post(models.Model):
     description = HTMLField()
     link = models.CharField(max_length=500)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+
+    def save_post(self):
+        self.save()
