@@ -10,3 +10,6 @@ class Profile(models.Model):
     bio = HTMLField()
     profile_pic = models.ImageField(upload_to='images/' , default='images/smoke.jpeg')
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
+
+    def save_profile(self):
+        self.save()
