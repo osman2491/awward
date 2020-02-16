@@ -17,6 +17,27 @@ class Profile(models.Model):
     def delete_profile(self):
         self.delete()
 
+    @classmethod   
+    def update_name(cls,id,new_First_Name):
+        cls.objects.filter(user_id = id).update(First_Name=new_First_Name)
+        new_title_object = cls.objects.get(First_Name=new_First_Name)
+        new_name = new_title_object.First_Name
+        return new_name
+
+    @classmethod
+    def get_user_profile(cls,id):
+        profile = cls.objects.get(user_id=id)
+        return profile
+
+@receiver(post_save,sender=User)
+def create_profile(sender, instance,created,**kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    
+@receiver(post_save,sender=User)
+def save_profile(sender, instance,**kwargs):
+    instance.profile.save()
+
 
 class Post(models.Model):
     title =  models.CharField(max_length=30)
@@ -31,13 +52,15 @@ class Post(models.Model):
     def delete_post(self):
         self.delete()
 
-
     @classmethod   
-    def update_name(cls,id,new_First_Name):
-        cls.objects.filter(user_id = id).update(First_Name=new_First_Name)
-        new_title_object = cls.objects.get(First_Name=new_First_Name)
-        new_name = new_title_object.First_Name
-        return new_name
+    def update_title(cls,id,new_title):
+        cls.objects.filter(pk = id).update(title=new_title)
+        new_title_object = cls.objects.get(title=new_title)
+        new_title = new_title_object.title
+        return new_title
+
+
+    
 
 class Reviews(models.Model):
     title = models.CharField(max_length=50)
