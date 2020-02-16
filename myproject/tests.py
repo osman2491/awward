@@ -54,3 +54,14 @@ class ProfileTestClass(TestCase):
         new_name = 'Erik' 
         update = self.profile.update_name(self.profile.user_id,new_name)
         self.assertEqual(update,new_name)
+
+    def test_single_project_method(self):
+        self.profile.save_profile()
+        profile = self.profile.get_user_profile(self.profile.user_id)
+        self.assertTrue(profile.user_id  is 3)
+        
+        
+        
+        
+    def tearDown(self):
+        Profile.objects.all().delete()
