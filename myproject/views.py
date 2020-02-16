@@ -33,3 +33,16 @@ def search_project(request):
         message = "You haven't searched for any term "
         return render(request, 'myprojects/search.html', {"message": message})
 
+def update_profile(request):
+    user_profile = Profile.objects.get(user=request.user)
+    # form = UpdateProfileForm(instance=request.user)
+    
+    if request.method == "POST":
+        form =  UpdateProfileForm(request.POST,request.FILES,instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+        return redirect('home')
+    else:
+        form = UpdateProfileForm(instance=request.user.profile)
+        return render(request,'myprojects/update-prof.html', {'form':form})
+
