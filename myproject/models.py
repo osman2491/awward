@@ -27,3 +27,6 @@ class Post(models.Model):
 
     def save_post(self):
         self.save()
+
+    def delete_post(self):
+        self.delete()
