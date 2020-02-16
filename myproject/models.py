@@ -31,6 +31,14 @@ class Post(models.Model):
     def delete_post(self):
         self.delete()
 
+
+    @classmethod   
+    def update_name(cls,id,new_First_Name):
+        cls.objects.filter(user_id = id).update(First_Name=new_First_Name)
+        new_title_object = cls.objects.get(First_Name=new_First_Name)
+        new_name = new_title_object.First_Name
+        return new_name
+
 class Reviews(models.Model):
     title = models.CharField(max_length=50)
     review = models.TextField()
