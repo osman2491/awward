@@ -59,6 +59,15 @@ class Post(models.Model):
         new_title = new_title_object.title
         return new_title
 
+    @classmethod
+    def get_single_project(cls,id):
+        post = cls.objects.get(pk=id)
+        return post
+    
+    def __str__(self):
+        
+        return self.title
+
 
     
 
